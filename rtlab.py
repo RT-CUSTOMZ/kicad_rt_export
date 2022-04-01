@@ -5,7 +5,7 @@ import pcbnew
 
 def generateGerber(plotControl, plotOptions, board):
     plotOptions.SetPlotFrameRef(False)
-    plotOptions.SetLineWidth(pcbnew.FromMM(0.35))
+    # plotOptions.SetLineWidth(pcbnew.FromMM(0.35))
 
     plotOptions.SetAutoScale(False)
     plotOptions.SetScale(1)

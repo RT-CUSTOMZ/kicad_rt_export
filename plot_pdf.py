@@ -6,7 +6,7 @@ import pcbnew
 def generatePdf(plotControl, plotOptions, ):
     # Set some important plot options:
     plotOptions.SetPlotFrameRef(False)
-    plotOptions.SetLineWidth(pcbnew.FromMM(0.35))
+    # plotOptions.SetLineWidth(pcbnew.FromMM(0.35))
 
     plotOptions.SetAutoScale(False)
     plotOptions.SetScale(1)
