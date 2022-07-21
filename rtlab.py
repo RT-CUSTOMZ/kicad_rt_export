@@ -28,7 +28,7 @@ def generateGerber(plotControl, plotOptions, board):
     plotOptions.SetExcludeEdgeLayer(True)
 
     # Passermarken
-
+    addUserEco1LayerToFiducials(board)
     plotControl.SetLayer(pcbnew.Eco1_User)
     plotControl.OpenPlotfile("Eco1.User", pcbnew.PLOT_FORMAT_GERBER, "LPKF Passermarken")
     plotControl.PlotLayer()
@@ -74,3 +74,14 @@ def generateGerber(plotControl, plotOptions, board):
     rptfn = plotControl.GetPlotDirName() + 'drill_report.rpt'
     print('report: %s' % ( rptfn ))
     drlwriter.GenDrillReportFile( rptfn );
+
+def addUserEco1LayerToFiducials(board):
+    for fp in board.GetFootprints():
+        fpRef = fp.GetReference()
+
+        if(fpRef.startswith("FID")):
+            for  fpPad in fp.Pads():
+                layerSet = fpPad.GetLayerSet()
+                if(layerSet.Contains(pcbnew.Eco1_User) == False):
+                    layerSet.AddLayer(pcbnew.Eco1_User)
+                    fpPad.SetLayerSet(layerSet)
