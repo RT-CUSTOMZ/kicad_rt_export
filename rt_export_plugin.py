@@ -53,6 +53,7 @@ class RtExportPlugin(pcbnew.ActionPlugin):
         plot_pdf.generatePdf(pctl, popt)
         popt.SetMirror(False)
         rtlab.generateGerber(pctl, popt, board)
+        rtlab.generateGerberforUV(pctl, popt, board)
         # # self.run_with_dialog(pcbnew.GetBoard(), config, )
 
     # @staticmethod

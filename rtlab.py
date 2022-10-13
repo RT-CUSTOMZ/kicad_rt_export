@@ -2,6 +2,29 @@ import sys
 # from pcbnew import *
 import pcbnew
 
+def generateGerberforUV(plotControl, plotOptions, board):
+    
+    plotOptions.SetExcludeEdgeLayer(False)
+    plotOptions.SetPlotViaOnMaskLayer(True)
+
+    plotOptions.SetPlotValue(False)
+    plotOptions.SetPlotReference(False)
+
+    plotOptions.SetDisableGerberMacros(False)
+    plotOptions.SetUseGerberX2format(False)
+    plotOptions.SetIncludeGerberNetlistInfo(False)
+
+
+    filler = pcbnew.ZONE_FILLER(board) # create the filler provide the board as a param
+    filler.Fill(board.Zones()) # use the filler to re-fill all Zones on the board.
+    
+    plotControl.SetLayer(pcbnew.F_Cu)
+    plotControl.OpenPlotfile("F.Cu.UV", pcbnew.PLOT_FORMAT_GERBER, "Top Copper UV")
+    plotControl.PlotLayer()
+
+    plotControl.SetLayer(pcbnew.B_Cu)
+    plotControl.OpenPlotfile("B.Cu.UV", pcbnew.PLOT_FORMAT_GERBER, "Bottom Copper UV")
+    plotControl.PlotLayer()
 
 def generateGerber(plotControl, plotOptions, board):
     plotOptions.SetPlotFrameRef(False)
