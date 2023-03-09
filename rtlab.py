@@ -2,9 +2,14 @@ import sys
 # from pcbnew import *
 import pcbnew
 
+if(pcbnew.Version()=="7.0.0"):
+    version7 = True
+
 def generateGerberforUV(plotControl, plotOptions, board):
-    
-    plotOptions.SetExcludeEdgeLayer(False)
+
+    if(not version7):
+        plotOptions.SetExcludeEdgeLayer(False)
+
     plotOptions.SetPlotViaOnMaskLayer(True)
 
     plotOptions.SetPlotValue(False)
@@ -36,8 +41,9 @@ def generateGerber(plotControl, plotOptions, board):
 
     plotOptions.SetUseGerberAttributes(False)
     # plotOptions.SetUseGerberX2format(False)
-
-    plotOptions.SetExcludeEdgeLayer(True)
+    
+    if(not version7):
+        plotOptions.SetExcludeEdgeLayer(True)
 
     # plotOptions.SetUseAuxOrigin(True)
     plotOptions.SetUseAuxOrigin(False) # drill file and pdf should be the same
@@ -48,7 +54,8 @@ def generateGerber(plotControl, plotOptions, board):
 
     plotOptions.SetPlotReference(False)
     plotOptions.SetPlotInvisibleText(True)
-    plotOptions.SetExcludeEdgeLayer(True)
+    if(not version7):
+        plotOptions.SetExcludeEdgeLayer(True)
 
     # Passermarken
     addUserEco1LayerToFiducials(board)
@@ -83,7 +90,8 @@ def generateGerber(plotControl, plotOptions, board):
     # True to generate only one drill file
     mergeNPTH = True
     # drlwriter.SetOptions( mirror, minimalHeader, offset, mergeNPTH )
-    drlwriter.SetOptions( offset)
+    if(not version7):
+        drlwriter.SetOptions( offset)
 
     metricFmt = True
     drlwriter.SetFormat( metricFmt )

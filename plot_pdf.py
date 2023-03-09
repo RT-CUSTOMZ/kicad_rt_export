@@ -2,6 +2,8 @@ import sys
 # from pcbnew import *
 import pcbnew
 
+if(pcbnew.Version()=="7.0.0"):
+    version7 = True
 
 def generatePdf(plotControl, plotOptions, ):
     # Set some important plot options:
@@ -12,7 +14,9 @@ def generatePdf(plotControl, plotOptions, ):
     plotOptions.SetScale(1)
     plotOptions.SetMirror(False)
     plotOptions.SetUseGerberAttributes(True)
-    plotOptions.SetExcludeEdgeLayer(False)
+    if(not version7):
+        plotOptions.SetExcludeEdgeLayer(False)
+
     plotOptions.SetScale(1)
     # plotOptions.SetUseAuxOrigin(True)
     plotOptions.SetUseAuxOrigin(False) # drill file and pdf should be the same
@@ -47,6 +51,11 @@ def generatePdf(plotControl, plotOptions, ):
         # ( "MaskBottom", B_Mask, "Mask bottom" ),
         # ( "EdgeCuts", Edge_Cuts, "Edges" ),
     ]
+
+    if(version7):
+        layerselection = plotOptions.GetPlotOnAllLayersSelection()
+        addedlayerselection = layerselection.addLayer(pcbnew.Edge_Cuts)
+        plotOptions.SetPlotOnAllLayersSelection(addedlayerselection)
 
     for layer_info in plot_plan:
         plotControl.SetLayer(layer_info[1])
