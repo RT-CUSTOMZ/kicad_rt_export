@@ -10,13 +10,13 @@ Basiert auf dem InteractiveHtmlBom Projekt.
 
 Das Plugin funktioniert unter KiCad 7.0 sowie KiCad 6.0, für KiCad 5 muss die mit dem *Tag* `kicad-5.x` versehene Version verwendet werden.
 
-(im dropdown unter *tags* `kicad-5.x`, anstatt `master`, auswählen  )
+(im Dropdown unter *tags* `kicad-5.x`, anstatt `master`, auswählen  )
 
 ## Installation
 
 ### Installationspfad finden
 
-Order ist je nach Betriebssystem / Installationsmethod an unterschiedlichen Pfaden. In KiCad "PCB Editor" öffnen, unter Tools/Werkzeuge -> Externe Plugins -> Ordner öffnen.
+Der Ordner ist je nach Betriebssystem / Installationsmethode unterschiedlich. In KiCad "PCB Editor" öffnen, unter Tools/Werkzeuge -> Externe Plugins -> Ordner öffnen.
 
 Beispielpfade:
 
