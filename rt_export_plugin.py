@@ -47,6 +47,9 @@ class RtExportPlugin(pcbnew.ActionPlugin):
 
         popt.SetOutputDirectory("export/")
 
+        if not rtlab.designRuleCheck(pctl, popt, board):
+            return
+
         plot_pdf.generatePdf(pctl, popt)
         popt.SetMirror(False)
         rtlab.generateGerber(pctl, popt, board)

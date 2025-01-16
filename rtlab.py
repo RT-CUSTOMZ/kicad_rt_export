@@ -2,6 +2,10 @@ import sys
 # from pcbnew import *
 import pcbnew
 
+import wx
+import wx.aui
+import wx.adv
+
 majorVersion = int(pcbnew.Version().split(".")[0])
 
 
@@ -130,12 +134,28 @@ def generateGerber(plotControl, plotOptions, board):
 
 
 def addUserEco1LayerToFiducials(board):
+    fid_count = 0
     for fp in board.GetFootprints():
         fpRef = fp.GetReference()
 
         if (fpRef.startswith("FID")):
+            fid_count += 1
             for fpPad in fp.Pads():
                 layerSet = fpPad.GetLayerSet()
                 if (layerSet.Contains(pcbnew.Eco1_User) == False):
                     layerSet.AddLayer(pcbnew.Eco1_User)
                     fpPad.SetLayerSet(layerSet)
+    if (fid_count != 3):
+        wx.MessageBox("Error: Found " + str(fid_count) + " fiducials, 3 required!")
+        
+def designRuleCheck(plotControl, plotOptions, board):
+    fid_count = 0
+    for fp in board.GetFootprints():
+        fpRef = fp.GetReference()
+
+        if (fpRef.startswith("FID")):
+            fid_count += 1
+    if (fid_count != 3):
+        wx.MessageBox("Error: Found " + str(fid_count) + " fiducials, 3 required!")
+        return False
+    return True
