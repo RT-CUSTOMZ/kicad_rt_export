@@ -4,7 +4,6 @@ import os
 import sys
 
 import pcbnew
-import wx
 
 from . import plot_pdf
 from . import rtlab
@@ -33,10 +32,9 @@ class RtExportPlugin(pcbnew.ActionPlugin):
         self.show_toolbar_button = True
         self.icon_file_name = os.path.join(
                 os.path.dirname(__file__), 'icon.png')
-        self.description = "Generate manifactoring data for RT Lab manufactoring process."
+        self.description = "Generate manufactoring data for RT Lab manufactoring process."
 
     def Run(self):
-        # config = Config()
         pcb_file_name = pcbnew.GetBoard().GetFileName()
         if not pcb_file_name:
             ibom.logerror('Please save the board file before generating manufactoring data.')
@@ -48,68 +46,9 @@ class RtExportPlugin(pcbnew.ActionPlugin):
         popt = pctl.GetPlotOptions()
 
         popt.SetOutputDirectory("export/")
-        # popt.SetOutputDirectory(sys.argv[2])
 
         plot_pdf.generatePdf(pctl, popt)
         popt.SetMirror(False)
         rtlab.generateGerber(pctl, popt, board)
-        rtlab.generateGerberforUV(pctl, popt, board)
-        # # self.run_with_dialog(pcbnew.GetBoard(), config, )
+        # rtlab.generateGerberforUV(pctl, popt, board)
 
-    # @staticmethod
-    # def run_with_dialog(board, config, cli=False):
-    #     def save_config(dialog_panel):
-    #         config.set_from_dialog(dialog_panel)
-    #         config.save()
-
-    #     dlg = dialog.SettingsDialog(
-    #             extra_data_func=parse_schematic_data,
-    #             config_save_func=save_config
-    #     )
-    #     try:
-    #         pcb_file_name = board.GetFileName()
-    #         config.netlist_initial_directory = os.path.dirname(pcb_file_name)
-    #         extra_data_file = find_latest_schematic_data(pcb_file_name)
-    #         if extra_data_file is not None:
-    #             dlg.set_extra_data_path(extra_data_file)
-    #         config.transfer_to_dialog(dlg.panel)
-    #         if dlg.ShowModal() == wx.ID_OK:
-    #             config.set_from_dialog(dlg.panel)
-    #             ibom.main(board, config, parse_schematic_data, cli)
-    #     finally:
-    #         dlg.Destroy()
-
-
-# python 2 and 3 compatibility hack
-def to_utf(s):
-    if isinstance(s, bytes):
-        return s.decode('utf-8')
-    else:
-        return s
-
-
-# if __name__ == "__main__":
-#     app = wx.App()
-
-#     import argparse
-
-#     parser = argparse.ArgumentParser(
-#             description='KiCad InteractiveHtmlBom plugin CLI.',
-#             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-#     parser.add_argument('file',
-#                         type=lambda s: to_utf(s),
-#                         help="KiCad PCB file")
-#     config = Config()
-#     config.add_options(
-#             parser, dialog.GeneralSettingsPanel.FILE_NAME_FORMAT_HINT)
-#     args = parser.parse_args()
-#     if not os.path.isfile(args.file):
-#         print("File %s does not exist." % args.file)
-#         exit(1)
-#     print("Loading %s" % args.file)
-#     board = pcbnew.LoadBoard(os.path.abspath(args.file))
-#     if args.show_dialog:
-#         InteractiveHtmlBomPlugin.run_with_dialog(board, config, cli=True)
-#     else:
-#         config.set_from_args(args)
-#         ibom.main(board, config, parse_schematic_data, cli=True)

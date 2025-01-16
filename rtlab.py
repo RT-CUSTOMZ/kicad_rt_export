@@ -5,6 +5,9 @@ import pcbnew
 majorVersion = int(pcbnew.Version().split(".")[0])
 
 
+"""
+Function to generate top and bottom copper gerbers for direct UV exposure.
+"""
 def generateGerberforUV(plotControl, plotOptions, board):
 
     plotOptions.SetPlotViaOnMaskLayer(True)
