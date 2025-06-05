@@ -73,7 +73,7 @@ def generateGerber(plotControl, plotOptions, board):
     plotOptions.SetSubtractMaskFromSilk(False)
 
     plotOptions.SetPlotReference(False)
-    plotOptions.SetPlotInvisibleText(True)
+    # plotOptions.SetPlotInvisibleText(True)
     if (majorVersion < 7):
         plotOptions.SetExcludeEdgeLayer(True)
 
