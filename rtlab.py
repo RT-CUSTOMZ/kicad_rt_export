@@ -125,7 +125,7 @@ def generateGerber(plotControl, plotOptions, board):
     genMap = True
     print('create drill and map files in %s' % (plotControl.GetPlotDirName()))
     drlwriter.CreateDrillandMapFilesSet(
-        plotControl.GetPlotDirName(), genDrl, genMap)
+        plotControl.GetPlotDirName(), genDrl, genMap, False)
 
     # One can create a text file to report drill statistics
     rptfn = plotControl.GetPlotDirName() + 'drill_report.rpt'
